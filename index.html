@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#23664b" />
+    <meta name="description" content="Learn BFS and DFS one step at a time. Explore a graph, follow the queue or stack, and watch the traversal take shape." />
+    <title>GraphSearch Tutor — Learn by exploring</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%2323664b'/%3E%3Cpath d='M11 28L20 12L29 28M11 28H29' stroke='white' stroke-width='2' fill='none'/%3E%3Cg fill='white'%3E%3Ccircle cx='20' cy='12' r='3'/%3E%3Ccircle cx='11' cy='28' r='3'/%3E%3Ccircle cx='29' cy='28' r='3'/%3E%3C/g%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="js/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="./" aria-label="GraphSearch Tutor home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32"><path d="M8 24 16 8l8 16M8 24h16"/><circle cx="16" cy="8" r="3"/><circle cx="8" cy="24" r="3"/><circle cx="24" cy="24" r="3"/></svg>
+          </span>
+          <span>GraphSearch <span class="brand-light">Tutor</span></span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a class="nav-active" href="#playground">Playground</a>
+          <a href="#how-it-works">How it works <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 12 12 4M4 4h8v8"/></svg></a>
+        </nav>
+        <span class="learning-badge"><span></span> A little practice. A clearer picture.</span>
+      </div>
+    </header>
+
+    <main class="page-shell">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow"><span aria-hidden="true">✳</span> ALGORITHMS, ONE STEP AT A TIME</p>
+          <h1 id="page-title">Big ideas. <span>Small steps.</span></h1>
+          <p class="intro-copy">Get to know BFS and DFS. Explore a graph, follow the frontier,<br class="desktop-break" /> and see how every next step makes a difference.</p>
+        </div>
+        <div class="graph-facts" aria-label="Graph details">
+          <div><strong>05</strong><span>nodes</span></div>
+          <div><strong>04</strong><span>edges</span></div>
+          <div><strong>A<span class="start-arrow" aria-hidden="true"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M4 12 12 4M4 4h8v8"/></svg></span></strong><span>starting node</span></div>
+        </div>
+      </section>
+
+      <section class="workspace" id="playground" aria-label="Interactive graph search playground">
+        <div class="graph-card card">
+          <div class="card-header">
+            <div><h2>The playground</h2><p>A small graph. A world of possibilities.</p></div>
+            <span class="alphabetical-badge" title="Neighbors are visited in alphabetical order"><span aria-hidden="true">A → Z</span> <span class="sr-only">Alphabetical neighbor order</span></span>
+          </div>
+          <div class="graph-canvas">
+            <span class="canvas-label"><span></span> UNDIRECTED GRAPH</span>
+            <svg class="graph" viewBox="0 0 640 365" role="img" aria-labelledby="graph-title graph-description">
+              <title id="graph-title">A graph with five nodes, A to E</title>
+              <desc id="graph-description">Edges connect A to B, A to C, B to D, and C to E. No nodes have been visited.</desc>
+              <g class="graph-edges" aria-hidden="true">
+                <line data-edge="A-B" x1="320" y1="78" x2="175" y2="195" />
+                <line data-edge="A-C" x1="320" y1="78" x2="465" y2="195" />
+                <line data-edge="B-D" x1="175" y1="195" x2="175" y2="310" />
+                <line data-edge="C-E" x1="465" y1="195" x2="465" y2="310" />
+              </g>
+              <g class="graph-node is-frontier" data-node="A" transform="translate(320 78)"><circle class="node-halo" r="37"/><circle class="node-circle" r="28"/><text>A</text><text class="start-label" y="-49">START HERE</text></g>
+              <g class="graph-node" data-node="B" transform="translate(175 195)"><circle class="node-halo" r="37"/><circle class="node-circle" r="28"/><text>B</text></g>
+              <g class="graph-node" data-node="C" transform="translate(465 195)"><circle class="node-halo" r="37"/><circle class="node-circle" r="28"/><text>C</text></g>
+              <g class="graph-node" data-node="D" transform="translate(175 310)"><circle class="node-halo" r="37"/><circle class="node-circle" r="28"/><text>D</text></g>
+              <g class="graph-node" data-node="E" transform="translate(465 310)"><circle class="node-halo" r="37"/><circle class="node-circle" r="28"/><text>E</text></g>
+            </svg>
+            <div class="graph-legend" aria-label="Node state legend">
+              <span><i class="legend-current"></i>Current</span>
+              <span><i class="legend-visited"></i>Visited</span>
+              <span><i class="legend-frontier"></i>In frontier</span>
+              <span><i class="legend-unvisited"></i>Unvisited</span>
+            </div>
+          </div>
+          <div class="graph-controls">
+            <div class="algorithm-switch" role="group" aria-label="Choose an algorithm">
+              <button class="algorithm-button is-selected" data-algorithm="bfs" aria-pressed="true" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v5M4 8h12M4 8v7M10 8v7M16 8v7"/><circle cx="10" cy="3" r="1.5"/><circle cx="4" cy="16" r="1.5"/><circle cx="10" cy="16" r="1.5"/><circle cx="16" cy="16" r="1.5"/></svg>BFS</button>
+              <button class="algorithm-button" data-algorithm="dfs" aria-pressed="false" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3v7h10v7M5 10v7"/><circle cx="5" cy="3" r="1.5"/><circle cx="5" cy="17" r="1.5"/><circle cx="15" cy="17" r="1.5"/></svg>DFS</button>
+            </div>
+            <div class="step-controls">
+              <button id="reset-button" class="reset-button" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 7a6 6 0 1 1-1 6M4 3v4h4"/></svg>Reset</button>
+              <button id="next-button" class="next-button" type="button">Next Step <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="inspector card" aria-labelledby="inspector-title">
+          <div class="inspector-heading"><h2 id="inspector-title">Inside the algorithm</h2><span class="live-badge"><span></span>LIVE</span></div>
+          <div class="step-progress"><span id="step-label">STEP 00 OF 05</span><span id="algorithm-name">Breadth-first search</span></div>
+          <div class="progress-track" role="progressbar" aria-label="Visited nodes" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><span id="progress-fill"></span></div>
+          <div class="step-explanation">
+            <div class="explanation-heading"><span id="step-icon" aria-hidden="true">→</span><h3 id="step-title">Ready when you are.</h3></div>
+            <p id="step-message" aria-live="polite" aria-atomic="true">Start at A. Put A in the queue. BFS uses first in, first out (FIFO). Click Next Step to visit it.</p>
+          </div>
+          <section class="frontier-section" aria-labelledby="frontier-title">
+            <div class="section-heading"><h3 id="frontier-title">The queue</h3><span id="frontier-rule" class="rule-badge">FIFO</span></div>
+            <p id="frontier-description" class="section-description">First in, first out. A little like a line of people.</p>
+            <div id="frontier-items" class="frontier-items" aria-label="Queue: A is next"><span class="frontier-chip is-next">A</span></div>
+            <div class="frontier-direction"><span id="frontier-left">↑ NEXT OUT</span><span id="frontier-right">NEW ITEMS JOIN HERE ↑</span></div>
+          </section>
+          <section class="traversal-section" aria-labelledby="traversal-title">
+            <div class="section-heading"><h3 id="traversal-title">Traversal order</h3><span id="visited-count">0 of 5 visited</span></div>
+            <ol id="traversal-order" class="traversal-order" aria-label="No nodes visited yet"><li class="empty-slot">—</li><li class="empty-slot">—</li><li class="empty-slot">—</li><li class="empty-slot">—</li><li class="empty-slot">—</li></ol>
+          </section>
+        </aside>
+      </section>
+
+      <div class="playground-caption"><p><span aria-hidden="true"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 2v9h10M9 7l4 4-4 4"/></svg></span> Neighbors are always explored in alphabetical order.</p><p class="keyboard-tip">One step closer. Press <kbd>→</kbd> to keep exploring.</p></div>
+
+      <section class="learning-section" id="how-it-works" aria-labelledby="learning-title">
+        <div class="learning-section-heading"><h2 id="learning-title">Two approaches. One graph.</h2><span>GET THE BIG PICTURE</span></div>
+        <div class="learning-cards">
+          <article class="learning-card bfs-card">
+            <div class="concept-icon" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M20 8v10M8 18h24M8 18v13M20 18v13M32 18v13"/><circle cx="20" cy="8" r="3"/><circle cx="8" cy="31" r="3"/><circle cx="20" cy="31" r="3"/><circle cx="32" cy="31" r="3"/></svg></div>
+            <div><div class="concept-label">BREADTH-FIRST SEARCH <span>BFS</span></div><h3>Explore wide, then go deeper.</h3><p>Visit every neighbor before moving to the next level. A <strong>queue</strong> keeps the earliest discoveries first.</p><span class="concept-use">Good for finding the shortest path in an unweighted graph.</span></div>
+          </article>
+          <article class="learning-card dfs-card">
+            <div class="concept-icon" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M12 8v12h16v12M12 20v12"/><circle cx="12" cy="8" r="3"/><circle cx="12" cy="32" r="3"/><circle cx="28" cy="32" r="3"/></svg></div>
+            <div><div class="concept-label">DEPTH-FIRST SEARCH <span>DFS</span></div><h3>Follow your curiosity. Then backtrack.</h3><p>Follow one branch as far as it goes, then try another. A <strong>stack</strong> puts the latest discovery on top.</p><span class="concept-use">Good for exploring possibilities and checking connectivity.</span></div>
+          </article>
+        </div>
+      </section>
+      <footer class="site-footer"><span>GraphSearch Tutor</span><span>Built for the moments when it finally clicks. <span aria-hidden="true">✳</span></span></footer>
+    </main>
+    <noscript><p class="noscript-message">Please enable JavaScript to explore BFS and DFS interactively.</p></noscript>
+  </body>
+</html>
