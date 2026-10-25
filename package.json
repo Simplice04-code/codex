@@ -1,0 +1,13 @@
+{
+  "name": "graphsearch-tutor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An interactive, step-by-step guide to breadth-first and depth-first search.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node --test tests/*.test.js"
+  }
+}
